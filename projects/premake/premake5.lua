@@ -1,6 +1,6 @@
 workspace "wren-cli"
   configurations { "Release", "Debug" }
-  platforms { "64bit", "32bit" }
+  platforms { "64bit", "32bit", "64bit-no-nan-tagging" }
   defaultplatform "64bit"
   location ("../" .. _ACTION)
 
@@ -12,6 +12,9 @@ workspace "wren-cli"
   filter "configurations:Release"
     defines { "NDEBUG" }
     optimize "Full"
+
+  filter "platforms:64bit-no-nan-tagging"
+    defines { "WREN_NAN_TAGGING=0" }
 
   filter "platforms:32bit"
     architecture "x86"
@@ -27,13 +30,17 @@ workspace "wren-cli"
 
   --the 'xcode4' and 'gmake2' folder names
   --are simply confusing, so, simplify then
-  filter "action:xcode4"
+  filter { "action:xcode4" }
     location ("../xcode")
 
   filter "action:gmake2"
-    location ("../gmake")
-    filter "system:bsd"
-      location ("../gmake.bsd")
+    location ("../make")
+
+  filter { "action:gmake2", "system:bsd" }
+    location ("../make.bsd")
+
+  filter { "action:gmake2", "system:macosx" }
+    location ("../make.mac")
 
 project "wren_cli"
   kind "ConsoleApp"

@@ -18,6 +18,9 @@ obj/
 # The baseline file is machine-specific, so doesn't get checked in.
 /test/benchmark/baseline.txt
 
+# VSCode project files.
+.vscode
+
 # XCode user-specific stuff.
 xcuserdata/
 
@@ -42,3 +45,6 @@ ipch/
 
 # macOS XCode build cache
 deps/libuv/build/XCBuildData/
+
+# macOS
+.DS_Store
